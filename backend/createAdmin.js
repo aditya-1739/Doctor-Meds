@@ -2,19 +2,17 @@ import 'dotenv/config';
 import mongoose from 'mongoose';
 import Admin from './models/Admin.js';
 
-mongoose.connect('mongodb://localhost:27017/User', {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-})
+mongoose.connect(process.env.MONGODB_URI)
 .then(() => console.log('Connected to MongoDB'))
 .catch((err) => console.error('Could not connect to MongoDB', err));
 
+
 async function createAdmin() {
   const admin = new Admin({
-    firstName: "abc",
-    lastName: "pqr",
-    email: "abc@gmail.com",
-    password: "pqr123", 
+    firstName: "Aditya",
+    lastName: "Dev",
+    email: "aditya2005.dwivedi@gmail.com",
+    password: "Aditya2005@", 
     role: "admin"
   });
 
