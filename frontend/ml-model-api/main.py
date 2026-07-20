@@ -40,15 +40,22 @@ all_symptoms = [
 class PredictionInput(BaseModel):
     symptoms: list[str]
 
+import os
+
 app = FastAPI(title="Disease Prediction API")
 
-# Add CORS middleware
+# ─── CORS ─────────────────────────────────────────────────────────────────────
+# Read allowed origin from environment variable.
+# Set FRONTEND_URL on your hosting platform (Render / Railway).
+_frontend_url = os.getenv("FRONTEND_URL", "http://localhost:5173")
+_allowed_origins = [_frontend_url, "http://localhost:5173", "http://localhost:5174"]
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # Replace with specific origins for production
+    allow_origins=_allowed_origins,
     allow_credentials=True,
-    allow_methods=["*"],  # Allows all HTTP methods (GET, POST, etc.)
-    allow_headers=["*"],  # Allows all headers
+    allow_methods=["POST", "GET"],
+    allow_headers=["Content-Type", "Authorization"],
 )
 
 @app.post("/predict")

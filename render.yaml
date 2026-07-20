@@ -2,23 +2,33 @@ services:
   - type: web
     name: doctor-meds-backend
     env: node
-    repo: https://github.com/Hirdesh-singh/DOCTOR_MEDS
+    repo: https://github.com/aditya-1739/Doctor-Meds
     branch: main
-    buildCommand: "cd backend && npm install"
-    startCommand: "cd backend && node server.js"
+    rootDir: backend
+    buildCommand: npm install
+    startCommand: node server.js
     envVars:
+      - key: NODE_ENV
+        value: production
       - key: MONGODB_URI
         sync: false
       - key: JWT_SECRET
         sync: false
-    healthCheckPath: "/api/health"
+      - key: FRONTEND_URL
+        sync: false
+      - key: PORT
+        value: 10000
+    healthCheckPath: /api/health
     region: oregon
 
 staticSites:
   - name: doctor-meds-frontend
-    repo: https://github.com/Hirdesh-singh/DOCTOR_MEDS
+    repo: https://github.com/aditya-1739/Doctor-Meds
     branch: main
-    buildCommand: "cd frontend && npm install && npm run build"
-    staticPublishPath: "frontend/build"
-    envVars: []
+    rootDir: frontend
+    buildCommand: npm install && npm run build
+    staticPublishPath: dist
+    envVars:
+      - key: VITE_API_BASE_URL
+        sync: false
     region: oregon

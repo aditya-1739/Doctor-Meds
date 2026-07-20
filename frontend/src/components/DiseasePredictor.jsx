@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
+import { ML_API_URL } from '../config.js';
 // import './DiseasePredictor.css';
 
 // Sample list of symptoms
@@ -66,7 +67,7 @@ const DiseasePredictor = () => {
     }
 
     try {
-      const response = await axios.post("http://localhost:8000/predict", { symptoms: symptomData });
+      const response = await axios.post(`${ML_API_URL}/predict`, { symptoms: symptomData });
       setPrediction(response.data.predicted_disease || "No prediction available");
     } catch (error) {
       console.error("Error fetching prediction:", error);
